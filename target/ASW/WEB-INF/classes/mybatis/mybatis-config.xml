@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"  
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+  		<setting name="mapUnderscoreToCamelCase" value="true"/>
+  	</settings>
+	<typeAliases>
+		<typeAlias type="cn.edu.hdu.Entity.User" alias="User"/>
+		<typeAlias type="cn.edu.hdu.Entity.Role" alias="Role"/>
+		<typeAlias type="cn.edu.hdu.Entity.Menu" alias="Menu"/>
+		<typeAlias type="cn.edu.hdu.Entity.Factory" alias="Factory"/>
+	</typeAliases>
+	<!-- mybatis的接口类与映射文件不在同一包下时，需要另外指定映射文件的位置（方式1，在spring配置文件中加mapperLocations属性，方式2，mybatis配置文件中加mappers标签）-->
+	 <mappers>
+		<mapper resource="mappers/User.xml"/>
+		<mapper resource="mappers/Role.xml"/>
+		<mapper resource="mappers/Menu.xml"/>
+		<mapper resource="mappers/Factory.xml"/>
+	</mappers> 
+</configuration>

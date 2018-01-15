@@ -1,0 +1,9 @@
+@media print {}{
+	table{
+		border: 10px solid red;
+	}
+	myPrintArea{
+	border: 10px solid red;
+		margin-left: 50px;
+	}
+ }

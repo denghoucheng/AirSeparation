@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.hdu.Dao.UserMapper">
+	<sql id="userColumns">loginname,username,password,rights,status,role_id,parent_id,open_id</sql>
+
+	<resultMap type="User" id="userAndRoleResultMap">
+		<id column="user_id" property="userId"/>
+		<result column="loginname" property="loginname"/>
+		<result column="username" property="username"/>
+		<result column="password" property="password"/>
+		<result column="user_rights" property="rights"/>
+		<result column="status" property="status"/>
+		<result column="last_login" property="lastLogin"/>
+		<result column="parent_id" property="parentId"/>
+		<result column="open_id" property="openId"/>
+		<association property="role" column="role_id" javaType="Role">
+			<id column="role_id" property="roleId"/>
+			<result column="role_name" property="roleName"/>
+			<result column="role_rights" property="rights"/>
+		</association>
+	</resultMap>
+	
+	 <resultMap type="User" id="userResultMap">
+		<id column="user_id" property="userId"/>
+		<result column="loginname" property="loginname"/>
+		<result column="username" property="username"/>
+		<result column="password" property="password"/>
+		<result column="rights" property="rights"/>
+		<result column="status" property="status"/>
+		<result column="role_id" property="roleId"/>
+		<result column="parent_id" property="parentId"/>
+		<result column="open_id" property="openId"/>
+	</resultMap> 
+	
+	<select id="listAllUser" resultMap="userAndRoleResultMap">
+		select u.user_id,u.username,u.loginname,u.password,r.role_id,r.role_name ,u.last_login
+		from tb2_user u left join tb2_role r on u.role_id=r.role_id where u.status=0 
+	</select>
+	
+	<select id="listPageUser" parameterType="User" resultMap="userAndRoleResultMap">
+		select u.user_id, u.username, u.loginname, u.password, r.role_id, r.role_name, u.last_login,u.parent_id
+		from tb2_user u 
+		left join tb2_role r on u.role_id=r.role_id 
+		where u.status=0 
+		<if test="userId!=null and userId!=0">
+			and u.parent_id =#{userId}
+		</if>
+	</select>
+	
+	<select id="getUserByNameAndPwd" parameterType="map" resultMap="userResultMap">
+		select * from tb2_user
+			<where>
+				<if test="loginname!=null and password!=null">
+					 loginname = #{loginname} and password=#{password}
+				</if>
+			</where> 
+	</select>
+	
+	<select id="getUserById" parameterType="int" resultMap="userResultMap">
+		select * from tb2_user u where u.user_id = #{userId}
+	</select>
+	
+	<select id="getUserByOpenId" parameterType="String" resultMap="userResultMap">
+		select * from tb2_user where open_id = #{openId}
+	</select>
+	
+	<select id="getUserAndRoleById" parameterType="int" resultMap="userAndRoleResultMap">
+		select u.user_id,u.username,u.rights as user_rights,u.loginname,u.password,r.role_id,r.role_name,r.rights as role_rights 
+		from tb2_user u 
+		left join tb2_role r on u.role_id=r.role_id 
+		where u.user_id=#{userId}
+	</select>
+	<select id="getCountByName" parameterType="User" resultType="int">
+		select count(user_id) from tb2_user where loginname=#{loginname}
+	</select>
+	<select id="getCount" parameterType="User" resultType="int">
+		select count(user_id) from tb2_user where status=0 
+		<if test="loginname!=null and loginname!=''">
+		 and loginname like "%"#{loginname}"%" 
+		</if>
+		<if test="roleId!=null and roleId!=0">
+		and role_id=#{roleId} 
+		</if>
+		<if test="lastLoginStart!=null">
+		and last_login&gt;=#{lastLoginStart} 
+		</if>
+		<if test="lastLoginEnd!=null">
+		and last_login&lt;=#{lastLoginEnd} 
+		</if>
+	</select>
+	<select id="listAllOpenId" resultType="String">
+		select open_id from tb2_user where user_id is not null order by user_id asc
+	</select>
+	<insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="userId">
+		insert tb2_user (<include refid="userColumns"/>) values (#{loginname},#{username},#{password},#{rights},0,#{roleId},#{parentId},#{openId})
+	</insert>
+	<update id="updateUser" parameterType="User">
+		update tb2_user set 
+		loginname=#{loginname},
+		username=#{username},
+		password=#{password},
+		rights=#{rights},
+		status=#{status},
+		role_id=#{roleId},
+		last_login=#{lastLogin},
+		parent_id=#{parentId},
+		open_id=#{openId} 
+		where user_id=#{userId}
+	</update>
+	<update id="updateLastLogin" parameterType="User">
+		update tb2_user set last_login=#{lastLogin} where user_id=#{userId}
+	</update>
+	<update id="updateUserBaseInfo" parameterType="User">
+		update tb2_user set 
+		loginname=#{loginname},
+		username=#{username},
+		role_id=#{roleId} 
+		<if test="password!=null and password!=''">,password=#{password} </if>
+		 where user_id=#{userId}
+	</update>
+	<update id="updateUserRights" parameterType="User">
+		update tb2_user set rights=#{rights} where user_id=#{userId}
+	</update>
+	<delete id="deleteUser" parameterType="int">
+		delete from tb2_user where user_id=#{userId}
+	</delete>
+</mapper>

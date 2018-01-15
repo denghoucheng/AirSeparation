@@ -1,0 +1,27 @@
+body {
+	margin: 5px 5px;
+	font-family: 'trebuchet MS', 'Lucida sans', Arial;
+	font-size: 15px;
+	color: black;
+	text-align: center;
+}
+
+img {
+	display: block;
+	margin: 0 auto;
+}
+
+#div1 {
+	position: relative;
+	width: 960px;
+	height: 480px;
+	margin: 0 auto;
+}
+
+#div2 {
+	position: relative;
+	width: 1024px;
+	height: 768px;
+	border: 2px solid blue;
+	margin: 0 auto;
+}

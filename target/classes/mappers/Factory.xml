@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.hdu.Dao.FactoryMapper">
+
+	<sql id="factoryColumns">factory_index,factory_id,system_name,model_num,model_id
+	</sql>
+
+	<resultMap type="Factory" id="factoryResultMap">
+		<id column="factory_index" property="factoryIndex" />
+		<result column="factory_id" property="factoryId" />
+		<result column="system_name" property="systemName" />
+		<result column="model_num" property="modelNum" />
+		<result column="model_id" property="modelId" />
+	</resultMap>
+
+	<select id="listAllInfoByFactoryId" parameterType="Integer"
+		resultMap="factoryResultMap">
+		select
+		<include refid="factoryColumns" />
+		from tb2_factory where factory_id = #{factoryId}
+	</select>
+
+	<select id="getAlarmIdByFactoryId" parameterType="Integer"
+		resultType="Integer">
+		select model_id from tb2_factory where factory_id
+		= #{factoryId}
+	</select>
+
+	<select id="listAllSystemNameByFactoryId" resultType="String"
+		parameterType="Integer">
+		select system_name from tb2_factory where factory_id =
+		#{factoryId}
+	</select>
+
+	<select id="getData" resultType="map" statementType="STATEMENT">
+		select
+		${SqlFields} from ${KFTable} order by TIME Desc limit 1
+	</select>
+
+	<select id="getAlarmData" parameterType="String" resultType="java.util.HashMap"
+		statementType="STATEMENT">
+		select * from ${AlarmTable} order by TIME Desc limit 1
+	</select>
+
+
+	<select id="getAlarmInfoByAlarmId" resultType="java.util.HashMap"
+		parameterType="Integer">
+		select * from tb2_model2 where alarm_id = #{alarmId}
+	</select>
+
+	<select id="getParaNum" parameterType="java.util.HashMap"
+		resultType="int">
+		select para_num from ${modelName} where model_id = #{modelId}
+	</select>
+
+	<select id="getParaValues" parameterType="java.util.HashMap"
+		resultType="java.util.LinkedHashMap">
+		select ${fields} from ${modelName} where model_id = #{modelId}
+	</select>
+
+	<select id="getParasByModelNameAndId" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+		select * from ${modelName} where model_id = #{modelId}
+	</select>
+
+	<select id="getHistoryDatasByDate" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+		select (@rowNum:=@rowNum+1) as rowNo,${KFFields} from(
+		select (@rowNum:=@rowNum+1) as rowNo,${KFFields} from(
+		select ${KFFields} from ${tableName}
+		<where>
+			time between
+			<if test="dStart!=null">
+		   					 	<![CDATA[  DATE_FORMAT(#{dStart}, '%Y-%m-%d %H:%T:%s') ]]>
+			</if>
+			and
+			<if test="dEnd!=null">
+		   			 			<![CDATA[  DATE_FORMAT(#{dEnd}  , '%Y-%m-%d %H:%T:%s') ]]>
+			</if>
+		</where>
+		) A ,(Select @rowNum :=0) B
+		) C
+		<where>
+			<if test="interval!=null">
+		   					  <![CDATA[ and mod(C.rowNo,#{interval}) = 1  ]]>
+			</if>
+		</where>
+	</select>
+	<select id="getParaAnalysisData" parameterType="Integer" resultType="java.util.HashMap">
+		select * from para_ana1 where factory_id = #{factoryId}
+	</select>
+	<select id="getDailyData" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+		select * from ${tableName} where kind = #{teamNum} order by TIME Desc limit 1
+	</select>
+</mapper>
