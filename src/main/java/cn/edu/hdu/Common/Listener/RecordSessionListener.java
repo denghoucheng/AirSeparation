@@ -146,7 +146,7 @@ public class RecordSessionListener implements HttpSessionAttributeListener, Http
 	 */
 	public void sessionCreated(HttpSessionEvent e) {
 		log.info("* 为当前用户创建Session，SID:" + e.getSession().getId());
-		e.getSession().setMaxInactiveInterval(60*30);
+		//e.getSession().setMaxInactiveInterval(60*30);
 	}
 
 	/**
