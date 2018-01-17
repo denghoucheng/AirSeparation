@@ -218,24 +218,16 @@
 	function dailyData(dailyData) {
 		console.log("班组0-3的数据（json数组）：");
 		console.log(dailyData);
-		if (dailyData.length == 0) {
-			for (var i = 1; i <= 4; i++) {
-				var tdNum = 0;
-				if (i == 0) {
-					tdNum = 4;
-				} else {
-					tdNum = i;
-				}
-				$("#tr1").find("td").eq(eval(tdNum)).empty();
-				$("#tr2").find("td").eq(eval(tdNum)).empty();
-				$("#tr3").find("td").eq(eval(tdNum)).empty();
-				$("#tr4").find("td").eq(eval(tdNum)).empty();
-				$("#tr5").find("td").eq(eval(tdNum)).empty();
-				$("#tr6").find("td").eq(eval(tdNum)).empty();
-				$("#tr7").find("td").eq(eval(tdNum)).empty();
-				$("#tr8").find("td").eq(eval(tdNum)).empty();
-				$("#tr9").find("td").eq(eval(tdNum)).empty();
-			}
+		for (var tdNum = 1; tdNum<5; tdNum++) {
+			$("#tr1").find("td").eq(eval(tdNum)).html("");
+			$("#tr2").find("td").eq(eval(tdNum)).html("");
+			$("#tr3").find("td").eq(eval(tdNum)).html("");
+			$("#tr4").find("td").eq(eval(tdNum)).html("");
+			$("#tr5").find("td").eq(eval(tdNum)).html("");
+			$("#tr6").find("td").eq(eval(tdNum)).html("");
+			$("#tr7").find("td").eq(eval(tdNum)).html("");
+			$("#tr8").find("td").eq(eval(tdNum)).html("");
+			$("#tr9").find("td").eq(eval(tdNum)).html("");
 		}
 		for (var i = 0; i < dailyData.length; i++) {
 			var kind = dailyData[i].kind;
