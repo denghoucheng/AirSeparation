@@ -10,7 +10,7 @@ public class changUser {
 	public static void LoginStatus(Integer userId) {
 		Connection conn = null;
 		PreparedStatement ps = null;
-		String url = "jdbc:mysql://114.55.143.24:3306/db_Opc?user=root&password=opc_123&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false";
+		String url = "jdbc:mysql://********:3306/***?user=***&password=***&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false";
 		try {
 			conn = DriverManager.getConnection(url);
 			ps = conn.prepareStatement("update tb2_user set status=? where user_id=?");
