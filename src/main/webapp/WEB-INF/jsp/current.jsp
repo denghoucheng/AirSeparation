@@ -55,12 +55,25 @@ body {
 
 </style>
 <script type="text/javascript">
+	var iframeheight;
+	//根据工厂的系统个数图片自适应高度
+	$(function(){
+		var factoryNum = ${factoryNum};
+		if(factoryNum<12){
+			iframeheight = 'width:100%;height:92%;'
+		}else if(factoryNum<21){
+			iframeheight = 'width:100%;height:84%;'
+		}else{
+			iframeheight = 'width:100%;height:74%;'
+		}
+		//console.log(factoryNum+','+iframeheight)
+	})
 	function openTab(systemName, url, iconCls) {
-		console.log(url);
+		
 		if ($("#tabs").tabs("exists", systemName)) {
 			$("#tabs").tabs("select", systemName);
 		} else {
-			var content = "<iframe frameborder=0 scrolling='auto' style='width:100%;height:90%;' src='${pageContext.request.contextPath}/"
+			var content = "<iframe frameborder=0 scrolling='auto' style='"+ iframeheight +"' src='${pageContext.request.contextPath}/"
 					+ url + "'></iframe>";
 			console.log(content);
 			$("#tabs").tabs("add", {

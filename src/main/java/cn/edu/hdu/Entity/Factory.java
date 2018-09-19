@@ -55,4 +55,11 @@ public class Factory {
 	public void setModelId(Integer modelId) {
 		this.modelId = modelId;
 	}
+
+	@Override
+	public String toString() {
+		return "Factory [factoryIndex=" + factoryIndex + ", factoryId=" + factoryId + ", systemName=" + systemName
+				+ ", pc_ph=" + pc_ph + ", modelNum=" + modelNum + ", modelId=" + modelId + "]";
+	}
+	
 }

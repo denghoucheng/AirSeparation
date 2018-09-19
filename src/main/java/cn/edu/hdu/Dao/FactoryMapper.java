@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
-public interface FactoryMapper{
-	
+public abstract interface FactoryMapper
+{
   public abstract List<Factory> listAllInfoByFactoryId(Integer paramInteger);
   
   public abstract int getAlarmIdByFactoryId(Integer paramInteger);
@@ -29,10 +29,13 @@ public interface FactoryMapper{
   
   public abstract List<Object> getHistoryDatasByDate2(Map<String, Object> paramMap);
   
+  public abstract List<Object> getNewestStateData(Map<String, Object> paramMap);
+  
   public abstract void insertData();
   
-  public abstract Map<String, Object> getParaAnalysisData(Integer factoryId);
+  public abstract Map<String, Object> getParaAnalysisData(Integer paramInteger);
   
   public abstract Map<String, Object> getDailyData(Map<String, Object> paramMap);
   
+  public abstract List<Object> getAllData(Map<String, Object> paramMap);
 }

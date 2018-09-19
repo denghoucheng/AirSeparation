@@ -44,10 +44,10 @@ var url;
  * js对函数参数要求不严格
  */
 function openTab(menuid,menuName,menuUrl,factoryId,iconCls){
-  	console.log('当前菜单id是：'+menuid);
-	console.log("当前菜单名："+menuName);
-	console.log("菜单url为："+menuUrl);
-	console.log('工厂id为：'+factoryId); 
+//   	console.log('当前菜单id是：'+menuid);
+// 	console.log("当前菜单名："+menuName);
+// 	console.log("菜单url为："+menuUrl);
+// 	console.log('工厂id为：'+factoryId); 
     if($("#tabs").tabs("exists",menuName)){
         $("#tabs").tabs("select",menuName);
     }
@@ -60,7 +60,6 @@ function openTab(menuid,menuName,menuUrl,factoryId,iconCls){
     	else{
        		content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='${pageContext.request.contextPath}/"+menuUrl+"?factoryId="+factoryId+"'></iframe>";
     	}
-        console.log(content);
         $("#tabs").tabs("add",{
             title:menuName,
             iconCls:iconCls,

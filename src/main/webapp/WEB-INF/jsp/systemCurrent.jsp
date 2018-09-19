@@ -68,7 +68,7 @@ img{
 <title>系统动态页面</title>
 </head>
 <body>
-	 <div style="position:relative; width: 1024px;height: 768px;border: 2px solid red;margin:auto;margin-bottom:35px;">
+	 <div style="position:relative; width: 1024px;height: 768px;border: 2px solid red;margin:auto;">
 	  	<img id="img"/>
 	  	<div id="div1"></div>
 	 	<%-- <img id="img" src="images/${paraMap['image_name']}" alt="图像正在努力加载中.."></img> --%>
