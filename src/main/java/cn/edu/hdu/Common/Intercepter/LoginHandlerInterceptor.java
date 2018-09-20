@@ -11,7 +11,7 @@ import cn.edu.hdu.Entity.User;
 import cn.edu.hdu.Service.UserService;
 
 /**
- * 登陆拦截
+ * 鐧婚檰鎷︽埅
  */
 public class LoginHandlerInterceptor extends HandlerInterceptorAdapter{
 	
@@ -19,12 +19,14 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter{
 	private UserService userService;
   
 	/**
-	 * 1：路径匹配返回true，
-	 * 2：否则获取当前用户的中的sessionUser属性判断该用户是否登陆过，如果没有就返回false，并跳转到登录页面
+	 * 1锛氳矾寰勫尮閰嶈繑鍥瀟rue锛�
+	 * 2锛氬惁鍒欒幏鍙栧綋鍓嶇敤鎴风殑涓殑sessionUser灞炴�у垽鏂鐢ㄦ埛鏄惁鐧婚檰杩囷紝濡傛灉娌℃湁灏辫繑鍥瀎alse锛屽苟璺宠浆鍒扮櫥褰曢〉闈�
 	 */
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)throws Exception{
 	    String path = request.getServletPath();
 	    if (path.matches(".*/((login)|(index)|(logout)|(code)|(modifyPassword)|(checkLogin)|(analysis)).*")) {
+	    	
+	    	
 	      return true;
 	    }
 	    HttpSession session = request.getSession();
